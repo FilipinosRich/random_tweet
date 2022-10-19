@@ -50,10 +50,10 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      working-directory: ./cloud_infra
+      working-directory: ./infra
       run: terraform plan -lock-timeout=100s -input=false -out=./tfplan
 
     - name: Terraform Apply
       id: apply
-      working-directory: ./cloud_infra
+      working-directory: ./infra
       run: terraform apply -lock-timeout=100s -auto-approve ./tfplan
