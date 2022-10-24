@@ -32,6 +32,9 @@ jobs:
       run: python3 -m venv venv && source venv/bin/activate && pip3 install -r requirements.txt
 #      if: steps.cache-venv.outputs.cache-hit != 'true'
 
+    - name: Copy unzip file
+      run: cp -r unzip_requirements venv/lib/python3.7/site-packages
+
     - name: Test Step
       run: |
         ls venv/lib/python3.7/site-packages/
