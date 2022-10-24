@@ -55,7 +55,7 @@ jobs:
         cd torch
         zip -r9 torch.zip .
         cd ..
-        rm -r torch
+        [[ -d torch ]] && rm -r torch
         zip -r9 ./pytorch_fn.zip .
 
     - name: Upload artifact to S3
