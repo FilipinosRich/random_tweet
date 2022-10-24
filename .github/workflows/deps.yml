@@ -50,6 +50,8 @@ jobs:
 
     - name: Create archive of dependencies
       run: |
+        cd venv/lib/python3.10/site-packages/
+        ls .
         zip -r9 torch.zip . -i torch
         rm -r torch
         zip -r9 ${OLDPWD}/pytorch_fn.zip .
