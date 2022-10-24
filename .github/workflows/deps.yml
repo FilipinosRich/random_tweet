@@ -56,7 +56,6 @@ jobs:
         rm -r torch
         zip -r9 ${OLDPWD}/pytorch_fn.zip .
         cd $OLDPWD;
-        cd ./code
         zip -rg ${OLDPWD}/pytorch_fn.zip .
         cd $OLDPWD
         rm -r packages
