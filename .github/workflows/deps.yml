@@ -34,7 +34,9 @@ jobs:
 
     - name: Test Step
       run: |
-        ls venv/lib/
+        ls venv/lib/python3.10/site-packages/packages/
+        pwd
+        cd ..
         pwd
 
     - name: Clean Virtual ENV
