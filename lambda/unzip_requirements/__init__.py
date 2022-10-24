@@ -3,13 +3,13 @@ import shutil
 import sys
 import zipfile
 
-pkg_dir = '/tmp/python-requirements'
+pkg_dir = '/tmp/torch'
 
 # Add package_dir to our path so Python will know to look there for packages
-sys.path.insert(1, pkg_dir)
+sys.path.insert(1, '/tmp')
 
 if not os.path.exists(pkg_dir):
-    temp_dir = '/tmp/_temp-python-requirements'
+    temp_dir = '/tmp/_torch'
     if os.path.exists(temp_dir):
         shutil.rmtree(temp_dir)
 
