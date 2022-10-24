@@ -33,12 +33,13 @@ jobs:
       if: steps.cache-venv.outputs.cache-hit != 'true'
 
     - name: Clean Virtual ENV
-      run: cd venv/lib/python3.10/site-packages/packages \
-        && find . -type d -name "tests" -exec rm -rf {} + \
-        && find . -type d -name "__pycache__" -exec rm -rf {} + \
-        && rm -rf ./{caffe2,wheel,wheel-*,pkg_resources,boto*,aws*,pip,pip-*,pipenv,setuptools} \
-        && rm -rf ./{*.egg-info,*.dist-info} \ 
-        && find . -name \*.pyc -delete
+      run: |
+        cd venv/lib/python3.10/site-packages/packages 
+        find . -type d -name "tests" -exec rm -rf {} + 
+        find . -type d -name "__pycache__" -exec rm -rf {} + 
+        rm -rf ./{caffe2,wheel,wheel-*,pkg_resources,boto*,aws*,pip,pip-*,pipenv,setuptools}
+        rm -rf ./{*.egg-info,*.dist-info}
+        find . -name \*.pyc -delete
 
     - name: Create archive of dependencies
       run: |
