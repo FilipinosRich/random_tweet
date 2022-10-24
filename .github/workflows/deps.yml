@@ -52,9 +52,11 @@ jobs:
       run: |
         cd venv/lib/python3.10/site-packages/
         ls .
-        cd torch 
+        cd torch
+        ls .
         zip -r9 torch.zip .
         cd .. 
+        ls .
         rm -r torch
 #        ls .
 #        zip -r9 pytorch_fn.zip .
