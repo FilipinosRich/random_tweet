@@ -52,17 +52,13 @@ jobs:
       run: |
         cd venv/lib/python3.10/site-packages/
         ls .
-        cd torch 
-        zip -r9 torch.zip .
-        cd .. 
-        rm -r torch
-#        ls .
-#        zip -r9 pytorch_fn.zip .
-#        ls .
+        [[ -d torch ]] && cd torch && zip -r9 ../torch.zip . && cd .. && rm -r torch
+        zip -r9 pytorch_fn.zip .
+        ls .
 
     - name: Upload artifact to S3
       uses: actions/upload-artifact@v2
       with:
         name: pytorch_fn.zip
-        path: venv/lib/python3.10/site-packages/torch.zip
+        path: venv/lib/python3.10/site-packages/pytorch_fn.zip
         retention-days: 1
