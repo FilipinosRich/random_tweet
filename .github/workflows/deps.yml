@@ -15,7 +15,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: "3.9"
+        python-version: "3.7"
     - name: Install Python Virtual ENV
       run: pip3 install virtualenv
 
@@ -34,14 +34,14 @@ jobs:
 
     - name: Test Step
       run: |
-        ls venv/lib/python3.10/site-packages/
+        ls venv/lib/python3.7/site-packages/
         pwd
         cd ..
         pwd
 
     - name: Clean Virtual ENV
       run: |
-        cd venv/lib/python3.10/site-packages/
+        cd venv/lib/python3.7/site-packages/
         find . -type d -name "tests" -exec rm -rf {} + 
         find . -type d -name "__pycache__" -exec rm -rf {} + 
         rm -rf ./{caffe2,wheel,wheel-*,pkg_resources,boto*,aws*,pip,pip-*,pipenv,setuptools}
@@ -50,7 +50,7 @@ jobs:
 
     - name: Create archive of dependencies
       run: |
-        cd venv/lib/python3.10/site-packages/
+        cd venv/lib/python3.7/site-packages/
         ls .
         [[ -d torch ]] && cd torch && zip -r9 ../torch.zip . && cd .. && rm -r torch
         zip -r9 pytorch_fn.zip .
@@ -58,7 +58,7 @@ jobs:
 
     - name: Upload artifact to S3
       run: |
-        cd venv/lib/python3.10/site-packages/
+        cd venv/lib/python3.7/site-packages/
         aws s3 cp pytorch_fn.zip s3://random-tweet-bucket/lambda/pytorch_fn.zip
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
