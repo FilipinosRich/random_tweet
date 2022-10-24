@@ -58,4 +58,11 @@ jobs:
         cd $OLDPWD;
         zip -rg ${OLDPWD}/pytorch_fn.zip .
         cd $OLDPWD
-        rm -r packages
+        ls .
+
+    - name: Upload artifact to S3
+      uses: actions/upload-artifact@v2
+      with:
+        name: pytorch_fn.zip
+        path: pytorch_fn.zip
+        retention-days: 1
