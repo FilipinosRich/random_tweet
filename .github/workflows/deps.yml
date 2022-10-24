@@ -33,7 +33,7 @@ jobs:
 #      if: steps.cache-venv.outputs.cache-hit != 'true'
 
     - name: Copy unzip file
-      run: cp -r unzip_requirements venv/lib/python3.7/site-packages
+      run: cp -r lambda/unzip_requirements venv/lib/python3.7/site-packages
 
     - name: Test Step
       run: |
