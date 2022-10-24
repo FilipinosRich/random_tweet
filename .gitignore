@@ -3,6 +3,9 @@
 .idea/*
 .terraform/*
 
+venv/*
+.DS_Store
+
 # .tfstate files
 *.tfstate
 *.tfstate.*
