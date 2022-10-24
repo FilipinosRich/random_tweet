@@ -7,12 +7,46 @@ on:
 
 
 jobs:
-  run_tests:
-    runs-on: ubuntu-20.04
+  zip_deps:
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Run script file
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.10
+    - name: Install Python Virtual ENV
+      run: pip3 install virtualenv
+
+    - name: Virtual ENV
+      uses: actions/cache@v2
+      id: cache-venv
+      with:
+        path: venv
+        key: ${{ runner.os }}-venv-${{ hashFiles('**/requirements*.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-venv-
+
+    - name: Activate Virtual ENV
+      run: python3 -m venv venv && source venv/bin/activate && pip3 install -r requirements.txt
+      if: steps.cache-venv.outputs.cache-hit != 'true'
+
+    - name: Clean Virtual ENV
+      run: cd venv/lib/python3.10/site-packages/packages \
+        && find . -type d -name "tests" -exec rm -rf {} + \
+        && find . -type d -name "__pycache__" -exec rm -rf {} + \
+        && rm -rf ./{caffe2,wheel,wheel-*,pkg_resources,boto*,aws*,pip,pip-*,pipenv,setuptools} \
+        && rm -rf ./{*.egg-info,*.dist-info} \ 
+        && find . -name \*.pyc -delete
+
+    - name: Create archive of dependencies
       run: |
-         chmod +x ./lambda/pytorch.sh
-         ./lambda/pytorch.sh
-      shell: bash
+        zip -r9 torch.zip torch
+        rm -r torch
+        zip -r9 ${OLDPWD}/pytorch_fn.zip .
+        cd $OLDPWD;
+        cd ./code
+        zip -rg ${OLDPWD}/pytorch_fn.zip .
+        cd $OLDPWD
+        rm -r packages
