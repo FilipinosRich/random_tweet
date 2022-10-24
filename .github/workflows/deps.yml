@@ -34,14 +34,14 @@ jobs:
 
     - name: Test Step
       run: |
-        ls venv/lib/python3.10/site-packages/packages/
+        ls venv/lib/python3.10/site-packages/
         pwd
         cd ..
         pwd
 
     - name: Clean Virtual ENV
       run: |
-        cd venv/lib/python3.10/site-packages/packages 
+        cd venv/lib/python3.10/site-packages/
         find . -type d -name "tests" -exec rm -rf {} + 
         find . -type d -name "__pycache__" -exec rm -rf {} + 
         rm -rf ./{caffe2,wheel,wheel-*,pkg_resources,boto*,aws*,pip,pip-*,pipenv,setuptools}
