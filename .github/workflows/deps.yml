@@ -19,14 +19,14 @@ jobs:
     - name: Install Python Virtual ENV
       run: pip3 install virtualenv
 
-#    - name: Virtual ENV
-#      uses: actions/cache@v2
-#      id: cache-venv
-#      with:
-#        path: venv
-#        key: ${{ runner.os }}-venv-${{ hashFiles('**/requirements*.txt') }}
-#        restore-keys: |
-#          ${{ runner.os }}-venv-
+    - name: Virtual ENV
+      uses: actions/cache@v2
+      id: cache-venv
+      with:
+        path: venv
+        key: ${{ runner.os }}-venv-${{ hashFiles('**/requirements*.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-venv-
 
     - name: Activate Virtual ENV
       run: python3 -m venv venv && source venv/bin/activate && pip3 install -r requirements.txt
@@ -57,8 +57,10 @@ jobs:
         ls .
 
     - name: Upload artifact to S3
-      uses: actions/upload-artifact@v2
-      with:
-        name: pytorch_fn.zip
-        path: venv/lib/python3.10/site-packages/pytorch_fn.zip
-        retention-days: 1
+      run: |
+        cd venv/lib/python3.10/site-packages/
+        aws s3 sync pytorch_fn.zip s3://random-tweet-bucket/lambda/pytorch_fn.zip
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: "eu-west-1"
