@@ -9,5 +9,5 @@ if not os.path.exists(torch_dir):
    tempdir = '/tmp/_torch'
    if os.path.exists(tempdir):
        shutil.rmtree(tempdir)
-   zipfile.ZipFile('torch.zip', 'r').extractall(tempdir)
+   zipfile.ZipFile('/opt/python/torch.zip', 'r').extractall(tempdir)
    os.rename(tempdir, torch_dir)
