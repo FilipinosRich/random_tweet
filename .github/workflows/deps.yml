@@ -34,7 +34,7 @@ jobs:
 
     - name: Test Step
       run: |
-        ls
+        ls venv/lib/
         pwd
 
     - name: Clean Virtual ENV
