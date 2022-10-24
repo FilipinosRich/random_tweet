@@ -53,7 +53,8 @@ jobs:
         cd venv/lib/python3.7/site-packages/
         ls .
         [[ -d torch ]] && cd torch && zip -r9 ../torch.zip . && cd .. && rm -r torch
-        zip -r9 pytorch_fn.zip .
+        mkdir -p python && cp -a . python
+        zip -r9 pytorch_fn.zip python
         ls .
 
     - name: Upload artifact to S3
