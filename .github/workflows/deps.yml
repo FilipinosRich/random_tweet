@@ -29,7 +29,7 @@ jobs:
 #          ${{ runner.os }}-venv-
 
     - name: Activate Virtual ENV
-      run: python3 -m venv venv && source venv/bin/activate && pip3 install -r requirements.txt && pip3 install -e
+      run: python3 -m venv venv && source venv/bin/activate && pip3 install -r requirements.txt && pip3 install -e .
 #      if: steps.cache-venv.outputs.cache-hit != 'true'
 
     - name: Debug Step
