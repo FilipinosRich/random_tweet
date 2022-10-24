@@ -1,2 +1,2 @@
-transformers
 torch==1.12.1
+transformers
