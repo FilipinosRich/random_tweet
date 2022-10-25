@@ -1,4 +1,4 @@
 --find-links https://download.pytorch.org/whl/torch_stable.html
 transformers
-torch==v1.6.0
+torch==v1.6.0+cpu
 tqdm>=4.27
