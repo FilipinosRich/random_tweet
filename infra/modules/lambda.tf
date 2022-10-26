@@ -20,6 +20,7 @@ resource "aws_lambda_function" "random_tweet_lambda" {
   role        = aws_iam_role.random_tweet_role.arn
   runtime     = "python3.8"
   handler     = "lambda_function.lambda_handler"
+  timeout     = 60
 }
 
 resource "aws_iam_role" "random_tweet_role" {
