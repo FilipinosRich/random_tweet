@@ -12,8 +12,8 @@ permissions:
   contents: read
 
 jobs:
-  if: ${{ github.event.workflow_run.conclusion == 'success' }}
   terraform:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -38,11 +38,11 @@ jobs:
       working-directory: ./infra
       run: | 
         terraform init
-        
+
     # Linting
     - name: Lint Terraform
       uses: actionshub/terraform-lint@main
-    
+
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
       id: fmt
