@@ -1,9 +1,10 @@
 name: 'Infra using Terraform'
 
 on:
-  workflows_run:
+  workflow_run:
     workflows: ["Zip Dependencies and Lambda Code"]
-    branches: [main]
+    branches:
+      - main
     types:
       - completed
 
