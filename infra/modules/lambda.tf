@@ -42,3 +42,28 @@ resource "aws_iam_role" "random_tweet_role" {
     }
   )
 }
+
+resource "aws_iam_policy" "random_tweet_lambda_access" {
+  name        = "${var.project_name}-lambda-access"
+  description = "Policy to grant access to the execution role of the Lambda."
+
+  policy = jsonencode(
+    {
+      "Version" : "2012-10-17",
+      "Statement" : [
+        {
+          "Action" : [
+            "*"
+          ],
+          "Effect" : "Allow",
+          "Resource" : "*"
+        }
+      ]
+    }
+  )
+}
+
+resource "aws_iam_role_policy_attachment" "test-attach" {
+  role       = aws_iam_role.random_tweet_role.name
+  policy_arn = aws_iam_policy.random_tweet_lambda_access.arn
+}
