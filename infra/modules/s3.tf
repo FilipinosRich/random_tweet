@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "random-tweet" {
-  bucket = "random-tweet-bucket"
+  bucket = "${var.project_name}-bucket"
 
 }
 
