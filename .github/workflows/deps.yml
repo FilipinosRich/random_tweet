@@ -71,7 +71,7 @@ jobs:
       - name: Zip lambda_function.py
         run: |
           cd lambda/src/handler
-          zip random_tweet.zip lambda_function.py
+          zip ../../../random_tweet.zip lambda_function.py
 
       - name: Upload artifact to S3
         run: |
