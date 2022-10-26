@@ -23,50 +23,21 @@ resource "aws_lambda_function" "random_tweet_lambda" {
 }
 
 resource "aws_iam_role" "random_tweet_role" {
-  name               = "iam_for_lambda"
-  assume_role_policy = aws_iam_policy.random_tweet_assume_policy.policy
-}
+  name = "${var.project_name}-lambda-role"
 
-resource "aws_iam_policy" "random_tweet_assume_policy" {
-  name        = "${var.project_name}-lambda-assume-policy"
-  path        = "/"
-  description = "Policy for the assume role for the lambda function for the random tweet project."
-  policy = jsonencode({
-    "Version" : "2012-10-17",
-    "Statement" : [
-      {
-        "Action" : "sts:AssumeRole",
-        "Principal" : {
-          "Service" : "lambda.amazonaws.com"
-        },
-        "Effect" : "Allow",
-        "Sid" : ""
-      }
-    ]
-  })
-}
-resource "aws_iam_policy" "random_tweet_lambda" {
-  name        = "${var.project_name}-lambda-policy"
-  path        = "/"
-  description = "Policy for the lambda function for the random tweet project."
-
-  # Terraform's "jsonencode" function converts a
-  # Terraform expression result to valid JSON syntax.
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = [
-          "*"
-        ]
-        Effect   = "Allow"
-        Resource = "*"
-      },
-    ]
-  })
-}
-
-resource "aws_iam_role_policy_attachment" "random_tweet_lambda" {
-  role       = aws_iam_role.random_tweet_role.name
-  policy_arn = aws_iam_policy.random_tweet_lambda.arn
+  assume_role_policy = jsonencode(
+    {
+      "Version" : "2012-10-17",
+      "Statement" : [
+        {
+          "Action" : "sts:AssumeRole",
+          "Principal" : {
+            "Service" : "lambda.amazonaws.com"
+          },
+          "Effect" : "Allow",
+          "Sid" : ""
+        }
+      ]
+    }
+  )
 }
