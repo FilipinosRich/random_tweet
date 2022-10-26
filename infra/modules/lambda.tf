@@ -24,9 +24,27 @@ resource "aws_lambda_function" "random_tweet_lambda" {
 
 resource "aws_iam_role" "random_tweet_role" {
   name               = "iam_for_lambda"
-  assume_role_policy = aws_iam_policy.random_tweet_lambda.policy
+  assume_role_policy = aws_iam_policy.random_tweet_assume_policy.policy
 }
 
+resource "aws_iam_policy" "random_tweet_assume_policy" {
+  name        = "${var.project_name}-lambda-assume-policy"
+  path        = "/"
+  description = "Policy for the assume role for the lambda function for the random tweet project."
+  policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Action" : "sts:AssumeRole",
+        "Principal" : {
+          "Service" : "lambda.amazonaws.com"
+        },
+        "Effect" : "Allow",
+        "Sid" : ""
+      }
+    ]
+  })
+}
 resource "aws_iam_policy" "random_tweet_lambda" {
   name        = "${var.project_name}-lambda-policy"
   path        = "/"
