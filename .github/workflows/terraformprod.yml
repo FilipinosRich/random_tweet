@@ -60,10 +60,10 @@ jobs:
       working-directory: ./infra
       run: terraform plan -lock-timeout=100s -input=false -out=./tfplan
       env:
-        - TF_VAR_TWITTER_API_KEY_ID: ${{ secrets.TWITTER_API_KEY_ID }}
-        - TF_VAR_TWITTER_API_KEY_SECRET: ${{ secrets.TWITTER_API_KEY_SECRET }}
-        - TF_VAR_TWITTER_ACCESS_KEY_ID: ${{ secrets.TWITTER_ACCESS_KEY_ID }}
-        - TF_VAR_TWITTER_ACCESS_KEY_SECRET: ${{ secrets.TWITTER_ACCESS_KEY_SECRET }}
+        TF_VAR_TWITTER_API_KEY_ID: ${{ secrets.TWITTER_API_KEY_ID }}
+        TF_VAR_TWITTER_API_KEY_SECRET: ${{ secrets.TWITTER_API_KEY_SECRET }}
+        TF_VAR_TWITTER_ACCESS_KEY_ID: ${{ secrets.TWITTER_ACCESS_KEY_ID }}
+        TF_VAR_TWITTER_ACCESS_KEY_SECRET: ${{ secrets.TWITTER_ACCESS_KEY_SECRET }}
 
     - name: Terraform Apply
       id: apply
