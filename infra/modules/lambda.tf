@@ -1,3 +1,7 @@
+data "github_actions_secrets" "twitter_secrets" {
+  name = "random_tweet"
+}
+
 resource "aws_lambda_layer_version" "random_tweet_layer" {
   layer_name = "${var.project_name}-lambda-layer-${var.lambda_layer_version}"
 
