@@ -1,7 +1,3 @@
-data "github_actions_secrets" "twitter_secrets" {
-  full_name = "FilipinosRich/random_tweet"
-}
-
 resource "aws_lambda_layer_version" "random_tweet_layer" {
   layer_name = "${var.project_name}-lambda-layer-${var.lambda_layer_version}"
 
@@ -25,6 +21,14 @@ resource "aws_lambda_function" "random_tweet_lambda" {
   runtime     = "python3.8"
   handler     = "lambda_function.lambda_handler"
   timeout     = 60
+  environment {
+    variables = {
+      "API_TOKEN" : var.TWITTER_API_KEY_ID
+      "API_TOKEN_SECRET" : var.TWITTER_API_KEY_SECRET
+      "ACCESS_TOKEN" : var.TWITTER_ACCESS_KEY_ID
+      "ACCESS_TOKEN_SECRET" : var.TWITTER_ACCESS_KEY_SECRET
+    }
+  }
 }
 
 resource "aws_iam_role" "random_tweet_role" {
