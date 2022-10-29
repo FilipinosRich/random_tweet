@@ -27,6 +27,7 @@ resource "aws_lambda_function" "random_tweet_lambda" {
       "API_TOKEN_SECRET" : var.TWITTER_API_KEY_SECRET
       "ACCESS_TOKEN" : var.TWITTER_ACCESS_KEY_ID
       "ACCESS_TOKEN_SECRET" : var.TWITTER_ACCESS_KEY_SECRET
+      "BEARER_TOKEN" : var.TWITTER_BEARER_TOKEN
     }
   }
 }

@@ -64,6 +64,7 @@ jobs:
         TF_VAR_TWITTER_API_KEY_SECRET: ${{ secrets.TWITTER_API_KEY_SECRET }}
         TF_VAR_TWITTER_ACCESS_KEY_ID: ${{ secrets.TWITTER_ACCESS_KEY_ID }}
         TF_VAR_TWITTER_ACCESS_KEY_SECRET: ${{ secrets.TWITTER_ACCESS_KEY_SECRET }}
+        TF_VAR_TWITTER_BEARER_TOKEN: $[[ secrets.TWITTER_BEARER_TOKEN }}
 
     - name: Terraform Apply
       id: apply
