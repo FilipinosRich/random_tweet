@@ -5,14 +5,16 @@ resource "aws_lambda_layer_version" "random_tweet_layer" {
   compatible_architectures = ["x86_64"]
   s3_bucket                = aws_s3_bucket.random-tweet.id
   s3_key                   = var.lambda_layer_key
+  source_code_hash         = filebase64sha256(var.lambda_layer_key)
 }
 
 resource "aws_lambda_function" "random_tweet_lambda" {
   # ... other configuration ...
-  function_name = "${var.project_name}-lambda-function"
-  s3_bucket     = aws_s3_bucket.random-tweet.id
-  s3_key        = var.lambda_function_key
-  layers        = [aws_lambda_layer_version.random_tweet_layer.arn]
+  function_name    = "${var.project_name}-lambda-function"
+  s3_bucket        = aws_s3_bucket.random-tweet.id
+  s3_key           = var.lambda_function_key
+  layers           = [aws_lambda_layer_version.random_tweet_layer.arn]
+  source_code_hash = filebase64sha256(var.lambda_function_key)
   ephemeral_storage {
     size = 2048
   }
