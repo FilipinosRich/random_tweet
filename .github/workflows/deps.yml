@@ -45,7 +45,7 @@ jobs:
     - name: Create archive of dependencies
       run: |
         ls .
-        [[ -d ${SITE_PACKAGES_DIR}/torch ]] && zip -r9 ${SITE_PACKAGES_DIR}/torch.zip ${SITE_PACKAGES_DIR}/torch && rm -r ${SITE_PACKAGES_DIR}/torch
+        [[ -d ${SITE_PACKAGES_DIR}/torch ]] && zip -r9 ${SITE_PACKAGES_DIR}/torch.zip ${SITE_PACKAGES_DIR}/torch/. && rm -r ${SITE_PACKAGES_DIR}/torch
         mkdir -p python && cp -a ${SITE_PACKAGES_DIR}/. python
         zip -r9 pytorch_fn.zip python
         ls python
