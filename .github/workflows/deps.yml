@@ -44,7 +44,7 @@ jobs:
 
     - name: ZIP Torch
       run: |
-        [[ -d ${SITE_PACKAGES_DIR}/torch ]] && cd ${SITE_PACKAGES_DIR}/torch && zip -r9 ../torch.zip . && rm -r ${SITE_PACKAGES_DIR}/torch
+        [[ -d ${SITE_PACKAGES_DIR}/torch ]] && cd ${SITE_PACKAGES_DIR}/torch && zip -r9 ../torch.zip . && rm -r ../torch
 
     - name: Create archive of dependencies
       run: |
