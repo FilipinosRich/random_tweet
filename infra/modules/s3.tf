@@ -18,3 +18,13 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "example" {
     }
   }
 }
+
+data "aws_s3_object" "lambda_layer" {
+  bucket = aws_s3_bucket.random-tweet.id
+  key    = var.lambda_layer_key
+}
+
+data "aws_s3_object" "lambda_source" {
+  bucket = aws_s3_bucket.random-tweet.id
+  key    = var.lambda_function_key
+}
