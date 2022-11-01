@@ -9,6 +9,8 @@ on:
 jobs:
   zip_dependencies:
     runs-on: ubuntu-latest
+    env:
+      SITE_PACKAGES_DIR: venv/lib/python3.8/site-packages
     steps:
     - uses: actions/checkout@v2
 
@@ -21,18 +23,13 @@ jobs:
 
     - name: Activate Virtual ENV
       run: python3 -m venv venv && source venv/bin/activate && pip3 install -r requirements.txt
-#      if: steps.cache-venv.outputs.cache-hit != 'true'
-
-    - name: Debug Step
-      run: |
-        ls .
 
     - name: Copy unzip file
-      run: cp -r lambda/unzip_requirements venv/lib/python3.8/site-packages
+      run: cp -r lambda/unzip_requirements ${SITE_PACKAGES_DIR}
 
     - name: Test Step
       run: |
-        ls venv/lib/python3.8/site-packages/
+        ls ${SITE_PACKAGES_DIR}
         pwd
         cd ..
         pwd
