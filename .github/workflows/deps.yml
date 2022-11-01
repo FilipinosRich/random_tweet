@@ -1,82 +1,82 @@
-#name: 'Zip Dependencies and Lambda Code'
-#
-#on:
-#  push:
-#    branches:
-#      - main
-#
-#
-#jobs:
-#  zip_dependencies:
-#    runs-on: ubuntu-latest
-#    steps:
-#    - uses: actions/checkout@v2
-#
-#    - name: Set up Python
-#      uses: actions/setup-python@v2
-#      with:
-#        python-version: "3.8"
-#    - name: Install Python Virtual ENV
-#      run: pip3 install virtualenv
-#
-#    - name: Activate Virtual ENV
-#      run: python3 -m venv venv && source venv/bin/activate && pip3 install -r requirements.txt
-##      if: steps.cache-venv.outputs.cache-hit != 'true'
-#
-#    - name: Debug Step
-#      run: |
-#        ls .
-#
-#    - name: Copy unzip file
-#      run: cp -r lambda/unzip_requirements venv/lib/python3.8/site-packages
-#
-#    - name: Test Step
-#      run: |
-#        ls venv/lib/python3.8/site-packages/
-#        pwd
-#        cd ..
-#        pwd
-#
-#    - name: Clean Virtual ENV
-#      run: |
-#        cd venv/lib/python3.8/site-packages/
-#        find . -type d -name "tests" -exec rm -rf {} +
-#        find . -type d -name "__pycache__" -exec rm -rf {} +
-#        rm -rf ./{caffe2,wheel,wheel-*,pkg_resources,boto*,aws*,pip,pip-*,pipenv,setuptools}
-#        find . -name \*.pyc -delete
-#
-#    - name: Create archive of dependencies
-#      run: |
-#        cd venv/lib/python3.8/site-packages/
-#        ls .
-#        [[ -d torch ]] && cd torch && zip -r9 ../torch.zip . && cd .. && rm -r torch
-#        mkdir -p ../python && cp -a . ../python
-#        zip -r9 pytorch_fn.zip ../python
-#        ls .
-#
-#    - name: Upload artifact to S3
-#      run: |
-#        cd venv/lib/python3.8/site-packages/
-#        aws s3 cp pytorch_fn.zip s3://random-tweet-bucket/lambda/pytorch_fn.zip
-#      env:
-#        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#        AWS_DEFAULT_REGION: "eu-west-1"
-#
-#  zip_lambda:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v2
-#
-#      - name: Zip lambda_function.py
-#        run: |
-#          cd lambda/src/handler
-#          zip ../../../random_tweet.zip lambda_function.py
-#
-#      - name: Upload artifact to S3
-#        run: |
-#          aws s3 cp random_tweet.zip s3://random-tweet-bucket/lambda/random_tweet.zip
-#        env:
-#          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#          AWS_DEFAULT_REGION: "eu-west-1"
+name: 'Zip Dependencies and Lambda Code'
+
+on:
+  push:
+    branches:
+      - main
+
+
+jobs:
+  zip_dependencies:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: "3.8"
+    - name: Install Python Virtual ENV
+      run: pip3 install virtualenv
+
+    - name: Activate Virtual ENV
+      run: python3 -m venv venv && source venv/bin/activate && pip3 install -r requirements.txt
+#      if: steps.cache-venv.outputs.cache-hit != 'true'
+
+    - name: Debug Step
+      run: |
+        ls .
+
+    - name: Copy unzip file
+      run: cp -r lambda/unzip_requirements venv/lib/python3.8/site-packages
+
+    - name: Test Step
+      run: |
+        ls venv/lib/python3.8/site-packages/
+        pwd
+        cd ..
+        pwd
+
+    - name: Clean Virtual ENV
+      run: |
+        cd venv/lib/python3.8/site-packages/
+        find . -type d -name "tests" -exec rm -rf {} +
+        find . -type d -name "__pycache__" -exec rm -rf {} +
+        rm -rf ./{caffe2,wheel,wheel-*,pkg_resources,boto*,aws*,pip,pip-*,pipenv,setuptools}
+        find . -name \*.pyc -delete
+
+    - name: Create archive of dependencies
+      run: |
+        cd venv/lib/python3.8/site-packages/
+        ls .
+        [[ -d torch ]] && cd torch && zip -r9 ../torch.zip . && cd .. && rm -r torch
+        mkdir -p ../python && cp -a . ../python
+        zip -r9 pytorch_fn.zip ../python
+        ls .
+
+    - name: Upload artifact to S3
+      run: |
+        cd venv/lib/python3.8/site-packages/
+        aws s3 cp pytorch_fn.zip s3://random-tweet-bucket/lambda/pytorch_fn.zip
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: "eu-west-1"
+
+  zip_lambda:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Zip lambda_function.py
+        run: |
+          cd lambda/src/handler
+          zip ../../../random_tweet.zip lambda_function.py
+
+      - name: Upload artifact to S3
+        run: |
+          aws s3 cp random_tweet.zip s3://random-tweet-bucket/lambda/random_tweet.zip
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: "eu-west-1"
