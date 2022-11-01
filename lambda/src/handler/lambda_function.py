@@ -1,5 +1,5 @@
 import unzip_requirements
-from transformers import GPT2Tokenizer, GPT2LMHeadModel
+from transformers import AutoTokenizer, GPT2LMHeadModel
 import os
 import boto3
 import tweepy
@@ -84,7 +84,7 @@ def get_trend() -> str:
 
 def lambda_handler(event, context: dict) -> dict:
     download_s3_folder("random-tweet-bucket", "lambda/model/", local_dir="/tmp/model/")
-    tokenizer = GPT2Tokenizer.from_pretrained("/tmp/model")
+    tokenizer = AutoTokenizer.from_pretrained("/tmp/model")
     model = GPT2LMHeadModel.from_pretrained(
         "/tmp/model", pad_token_id=tokenizer.eos_token_id
     )
