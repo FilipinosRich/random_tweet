@@ -44,7 +44,6 @@ jobs:
 
     - name: Create archive of dependencies
       run: |
-        cd venv/lib/python3.8/site-packages/
         ls .
         [[ -d ${SITE_PACKAGES_DIR}/torch ]] && zip -r9 ${SITE_PACKAGES_DIR}/torch.zip ${SITE_PACKAGES_DIR}/torch && rm -r ${SITE_PACKAGES_DIR}/torch
         mkdir -p python && cp -a ${SITE_PACKAGES_DIR} python
