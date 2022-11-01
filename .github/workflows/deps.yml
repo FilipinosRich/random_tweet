@@ -42,10 +42,12 @@ jobs:
         rm -rf ./{caffe2,wheel,wheel-*,pkg_resources,boto*,aws*,pip,pip-*,pipenv,setuptools}
         find . -name \*.pyc -delete
 
+    - name: ZIP Torch
+      run: |
+        [[ -d ${SITE_PACKAGES_DIR}/torch ]] && cd ${SITE_PACKAGES_DIR}/torch && zip -r9 ../torch.zip . && rm -r ${SITE_PACKAGES_DIR}/torch
+
     - name: Create archive of dependencies
       run: |
-        ls .
-        [[ -d ${SITE_PACKAGES_DIR}/torch ]] && zip -r9 ${SITE_PACKAGES_DIR}/torch.zip ${SITE_PACKAGES_DIR}/torch/. && rm -r ${SITE_PACKAGES_DIR}/torch
         mkdir -p python && cp -a ${SITE_PACKAGES_DIR}/. python
         zip -r9 pytorch_fn.zip python
         ls python
