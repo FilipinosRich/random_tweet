@@ -24,3 +24,6 @@ variable "TWITTER_ACCESS_KEY_SECRET" {
 
 variable "TWITTER_BEARER_TOKEN" {
 }
+
+variable "schedule" {
+}
