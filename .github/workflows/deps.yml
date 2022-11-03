@@ -63,19 +63,33 @@ jobs:
         AWS_DEFAULT_REGION: "eu-west-1"
 
   zip_lambda:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
+      runs-on: ubuntu-latest
+      env:
+        SITE_PACKAGES_DIR: venv/lib/python3.8/site-packages
+      steps:
+        - uses: actions/checkout@v2
 
-      - name: Zip lambda_function.py
-        run: |
-          cd lambda/src/handler
-          zip ../../../random_tweet.zip lambda_function.py
+        - name: Set up Python
+          uses: actions/setup-python@v2
+          with:
+            python-version: "3.8"
+        - name: Install Python Virtual ENV
+          run: pip3 install virtualenv
 
-      - name: Upload artifact to S3
-        run: |
-          aws s3 cp random_tweet.zip s3://random-tweet-bucket/lambda/random_tweet.zip
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: "eu-west-1"
+        - name: Activate Virtual ENV
+          run: |
+            python3 -m venv venv && source venv/bin/activate && pip3 install pytest moto mock pytest-mock boto3 && deactivate
+            cd ${SITE_PACKAGES_DIR} && zip ../../../../random_tweet.zip .
+
+        - name: Zip lambda_function.py
+          run: |
+            cd lambda/src/handler
+            zip ../../../random_tweet.zip lambda_function.py
+
+        - name: Upload artifact to S3
+          run: |
+            aws s3 cp random_tweet.zip s3://random-tweet-bucket/lambda/random_tweet.zip
+          env:
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_DEFAULT_REGION: "eu-west-1"
