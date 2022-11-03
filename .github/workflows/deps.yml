@@ -21,12 +21,15 @@ jobs:
     - name: Install Python Virtual ENV
       run: pip3 install virtualenv
 
+    - name: Activate Virtual Test ENV
+      run: |
+        python3 -m venv test_env && source test_env/bin/activate && pip3 install -r requirements.txt
+        pip3 install pytest moto mock pytest-mock boto3
+        pytest lambda/src/ -v -s
+
     - name: Activate Virtual ENV
       run: |
         python3 -m venv venv && source venv/bin/activate && pip3 install -r requirements.txt
-        pip3 install pytest moto mock pytest-mock boto3
-        pytest lambda/src/ -v -s
-        pip3 uninstall pytest moto mock pytest-mock boto3 -y
 
     - name: Copy unzip file
       run: cp -r lambda/unzip_requirements ${SITE_PACKAGES_DIR}
