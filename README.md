@@ -1,7 +1,7 @@
 # Tutorial for deploying an end-to-end serverless project using AWS (Free Tier)
-[![Build Status](https://github.com/FilipinosRich/random_tweet/actions/workflows/deps/badge.svg)]
-[![Build Status](https://github.com/FilipinosRich/random_tweet/actions/workflows/terraformprod/badge.svg)]
-[![License](https://img.shields.io/github/license/FilipinosRich/random_tweet)]
+[![Infra using Terraform](https://github.com/FilipinosRich/random_tweet/actions/workflows/terraformprod.yml/badge.svg)](https://github.com/FilipinosRich/random_tweet/actions/workflows/terraformprod.yml)
+[![Zip Dependencies and Lambda Code](https://github.com/FilipinosRich/random_tweet/actions/workflows/deps.yml/badge.svg)](https://github.com/FilipinosRich/random_tweet/actions/workflows/deps.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 This project consists of a small tutorial which deploys and end-to-end serverless project using components of the free tier of AWS.
 It also discusses briefly some pitfalls and ways to improve when moving to paid components.
