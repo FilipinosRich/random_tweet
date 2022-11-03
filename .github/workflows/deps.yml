@@ -79,7 +79,7 @@ jobs:
         - name: Activate Virtual ENV
           run: |
             python3 -m venv venv && source venv/bin/activate && pip3 install pytest moto mock pytest-mock boto3 && deactivate
-            cd ${SITE_PACKAGES_DIR} && zip ../../../../random_tweet.zip .
+            cd ${SITE_PACKAGES_DIR} && zip -r ../../../../random_tweet.zip .
 
         - name: Zip lambda_function.py
           run: |
