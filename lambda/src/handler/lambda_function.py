@@ -27,8 +27,8 @@ def create_tweet(text: str) -> None:
     client.create_tweet(text=text)
 
 
-def generate_random_tweet(model, tokenizer, input: str) -> str:
-    input_ids = tokenizer(input, return_tensors="pt").input_ids
+def generate_random_tweet(model: 'PreTrainedModel', tokenizer: 'PreTrainedTokenizer', prompt: str) -> str:
+    input_ids = tokenizer(prompt, return_tensors="pt").input_ids
     outputs = model.generate(
         input_ids,
         do_sample=True,
@@ -40,7 +40,7 @@ def generate_random_tweet(model, tokenizer, input: str) -> str:
     return tokenizer.batch_decode(outputs, skip_special_tokens=True)[0]
 
 
-def download_s3_folder(bucket_obj, s3_folder, local_dir=None):
+def download_s3_folder(bucket_obj: 'boto3.resources.factory.s3.Bucket', s3_folder: str, local_dir=None) -> None:
     """
     Download the contents of a folder directory
     """
