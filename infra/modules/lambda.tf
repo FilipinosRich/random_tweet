@@ -1,5 +1,5 @@
 resource "aws_lambda_layer_version" "random_tweet_layer" {
-  layer_name = "${var.project_name}-lambda-layer-${var.lambda_layer_version}"
+  layer_name = "${var.project_name}-lambda-layer"
 
   compatible_runtimes      = ["python3.8"]
   compatible_architectures = ["x86_64"]

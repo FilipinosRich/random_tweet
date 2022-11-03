@@ -18,6 +18,7 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: "3.8"
+
     - name: Install Python Virtual ENV
       run: pip3 install virtualenv
 
@@ -33,13 +34,6 @@ jobs:
 
     - name: Copy unzip file
       run: cp -r lambda/unzip_requirements ${SITE_PACKAGES_DIR}
-
-    - name: Test Step
-      run: |
-        ls ${SITE_PACKAGES_DIR}
-        pwd
-        cd ..
-        pwd
 
     - name: Clean Virtual ENV
       run: |
