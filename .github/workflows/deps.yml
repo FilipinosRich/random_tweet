@@ -61,7 +61,9 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_DEFAULT_REGION: "eu-west-1"
 
+  # we run this after because we need the tests to pass in the first action
   zip_lambda:
+    needs: zip_dependencies
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
