@@ -5,7 +5,9 @@ import boto3
 import tweepy
 import random
 
+BUCKET_NAME = "random-tweet-bucket"
 s3 = boto3.resource("s3")
+bucket = s3.Bucket(BUCKET_NAME)
 
 api_token = os.getenv("API_TOKEN")
 api_secret = os.getenv("API_TOKEN_SECRET")
@@ -22,7 +24,6 @@ def create_tweet(text: str) -> None:
         access_token=access_token,
         access_token_secret=access_token_secret,
     )
-    # tweepy.API(client)
     client.create_tweet(text=text)
 
 
@@ -39,16 +40,11 @@ def generate_random_tweet(model, tokenizer, input: str) -> str:
     return tokenizer.batch_decode(outputs, skip_special_tokens=True)[0]
 
 
-def download_s3_folder(bucket_name, s3_folder, local_dir=None):
+def download_s3_folder(bucket_obj, s3_folder, local_dir=None):
     """
     Download the contents of a folder directory
-    Args:
-        bucket_name: the name of the s3 bucket
-        s3_folder: the folder path in the s3 bucket
-        local_dir: a relative or absolute directory path in the local file system
     """
-    bucket = s3.Bucket(bucket_name)
-    for obj in bucket.objects.filter(Prefix=s3_folder):
+    for obj in bucket_obj.objects.filter(Prefix=s3_folder):
         target = (
             obj.key
             if local_dir is None
@@ -58,7 +54,7 @@ def download_s3_folder(bucket_name, s3_folder, local_dir=None):
             os.makedirs(os.path.dirname(target))
         if obj.key[-1] == "/":
             continue
-        bucket.download_file(obj.key, target)
+        bucket_obj.download_file(obj.key, target)
 
 
 def get_trend() -> str:
@@ -82,8 +78,8 @@ def get_trend() -> str:
     return random_trend
 
 
-def lambda_handler(event, context: dict) -> dict:
-    download_s3_folder("random-tweet-bucket", "lambda/model/", local_dir="/tmp/model/")
+def lambda_handler(event: dict, context: dict) -> dict:
+    download_s3_folder(bucket, "lambda/model/", local_dir="/tmp/model/")
     tokenizer = AutoTokenizer.from_pretrained("/tmp/model")
     model = GPT2LMHeadModel.from_pretrained(
         "/tmp/model", pad_token_id=tokenizer.eos_token_id
@@ -93,7 +89,7 @@ def lambda_handler(event, context: dict) -> dict:
     text_to_tweet = f""" 
     {random_tweet}
     
-    #{trend}
+#{trend}
     """
     create_tweet(text_to_tweet)
 
