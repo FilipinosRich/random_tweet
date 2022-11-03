@@ -22,10 +22,9 @@ jobs:
       run: pip3 install virtualenv
 
     - name: Activate Virtual ENV
-      run: python3 -m venv venv && source venv/bin/activate && pip3 install -r requirements.txt
-
-    - name: Run tests
-      run: pytest lambda/src/ -v -s
+      run: |
+        python3 -m venv venv && source venv/bin/activate && pip3 install -r requirements.txt
+        pytest lambda/src/ -v -s
 
     - name: Copy unzip file
       run: cp -r lambda/unzip_requirements ${SITE_PACKAGES_DIR}
