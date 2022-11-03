@@ -3,8 +3,3 @@ transformers
 torch==v1.6.0+cpu
 tqdm>=4.27
 tweepy
-pytest
-moto
-mock
-pytest-mock
-boto3
