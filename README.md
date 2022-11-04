@@ -3,7 +3,7 @@
 [![Zip Dependencies and Lambda Code](https://github.com/FilipinosRich/random_tweet/actions/workflows/deps.yml/badge.svg)](https://github.com/FilipinosRich/random_tweet/actions/workflows/deps.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This project consists of a small tutorial which deploys and end-to-end serverless project using components of the free tier of AWS.
+This project consists of a small tutorial which deploys an end-to-end serverless project using components of the free tier of AWS.
 It also discusses briefly some pitfalls and ways to improve when moving to paid components.
 
 ## 1.  Tech stack
